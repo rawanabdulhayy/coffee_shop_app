@@ -66,6 +66,7 @@
 //
 // //image.asset doesn't take a border radius so neeed to be wrapped under a container if so
 // //column >> padding >>column >> text to avoid applying so many paddings for every widhet in column, how does this worl?
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 
 class DetailsScreen extends StatelessWidget {
@@ -221,13 +222,32 @@ class DetailsScreen extends StatelessWidget {
             ),
 
             SizedBox(height: 40),
-            Text("Description"),
-            Text(
-              "A cappuccino is an approximately 150 ml (5 oz) beverage, with 25 ml of espresso coffee and 85ml of fresh milk the fo.. Read More",
+            Text("Description", style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),),
+            // Text(
+            //   "A cappuccino is an approximately 150 ml (5 oz) beverage, with 25 ml of espresso coffee and 85ml of fresh milk the fo.. Read More",
+            // ),
+            Text.rich(
+              TextSpan(
+                text: 'A cappuccino is an approximately 150 ml (5 oz) beverage, with 25 ml of espresso coffee and 85ml of fresh milk the fo.. ',
+                style: TextStyle(color: Colors.black),
+                children: [
+                  TextSpan(
+                    text: 'Read More',
+                    style: TextStyle(
+                      color: Color.fromRGBO(198, 124, 78, 1),
+                      fontWeight: FontWeight.bold,
+                    ),
+                    recognizer: TapGestureRecognizer()..onTap = () {
+                      // Add your navigation or expansion logic here
+                    },
+                  ),
+                ],
+              ),
             ),
+
             SizedBox(height: 30),
 
-            Text("Size", style: Text,),
+            Text("Size", style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),),
             SizedBox(height: 10),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
