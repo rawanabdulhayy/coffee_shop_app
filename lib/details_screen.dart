@@ -1,71 +1,3 @@
-// import 'package:flutter/material.dart';
-//
-// class DetailsScreen extends StatelessWidget {
-//   const DetailsScreen({super.key});
-//
-//   @override
-//   Widget build(BuildContext context) {
-//     return Scaffold(
-//       backgroundColor: Colors.white,
-//       appBar: AppBar(
-//         // leading: IconButton(onPressed: {}, icon: Icons.arrow_back_ios),
-//         leading: IconButton(onPressed: () {}, icon: Icon(Icons.arrow_back_ios)),
-//         title: Text(
-//           "Detail",
-//           style: TextStyle(fontWeight: FontWeight.w600, fontSize: 18),
-//         ),
-//         centerTitle: true,
-//         actions: [
-//           IconButton(
-//             onPressed: () {},
-//             icon: Icon(Icons.favorite_border_outlined),
-//           ),
-//         ],
-//       ),
-//       body: Padding(
-//         padding: const EdgeInsets.all(16.0),
-//         child: Column(
-//           crossAxisAlignment: CrossAxisAlignment.start,
-//           children: [
-//             ClipRRect(
-//               borderRadius: BorderRadius.circular(16),
-//               child: Image.asset("assets/cappucino.png"),
-//             ),
-//             SizedBox(height: 10),
-//             Text(
-//               ("Cappucino"),
-//               style: TextStyle(fontSize: 20, fontWeight: FontWeight.w600),
-//             ),
-//             Text(
-//               ("with Chocolate"),
-//               style: TextStyle(
-//                 fontSize: 12,
-//                 fontWeight: FontWeight.w400,
-//                 color: Color.fromRGBO(47, 45, 44, 1),
-//               ),
-//             ),
-//             Row(
-//               children: [
-//                 Icon(Icons.star_rate, color: Color.fromRGBO(251, 190, 33, 1)),
-//                 Text(
-//                   "4.8",
-//                   style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
-//                 ),
-//                 Text(
-//                   "(230)",
-//                   style: TextStyle(fontSize: 12, fontWeight: FontWeight.w400),
-//                 ),
-//               ],
-//             ),
-//           ],
-//         ),
-//       ),
-//     );
-//   }
-// }
-//
-// //image.asset doesn't take a border radius so neeed to be wrapped under a container if so
-// //column >> padding >>column >> text to avoid applying so many paddings for every widhet in column, how does this worl?
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 
@@ -77,49 +9,47 @@ class DetailsScreen extends StatelessWidget {
     return Scaffold(
       backgroundColor: Colors.white,
 
-      // === App Bar Configuration ===
+      // === APP BAR CONFIGURATION ===
       appBar: AppBar(
-        // 'leading' widget typically holds the back button or navigation drawer icon.
-        // Note: 'icon:' expects a widget, so we use Icon(...), not Icons.arrow_back_ios directly.
+        // 'leading' refers to the widget on the far left of the AppBar (usually a back button).
+        // We're using an IconButton with the back arrow icon (iOS-style), wrapped inside Icon(...).
         leading: IconButton(
           onPressed: () {
-            // Add navigation pop or custom back logic here.
+            // Add custom navigation logic here (e.g. Navigator.pop(context)).
           },
           icon: Icon(Icons.arrow_back_ios),
         ),
 
-        // Title of the app bar.
+        // The title displayed in the center of the AppBar.
         title: const Text(
           "Detail",
           style: TextStyle(fontWeight: FontWeight.w600, fontSize: 18),
         ),
-        centerTitle: true, // Center the title in the AppBar (iOS-style)
-        // Action buttons on the right side of the AppBar
+        centerTitle: true, // Aligns the title to the center — common on iOS.
+
+        // Right-side icon buttons (actions) in the AppBar.
         actions: [
           IconButton(
             onPressed: () {
-              // Handle favorite action here
+              // Action logic for when the favorite icon is tapped.
             },
             icon: Icon(Icons.favorite_border_outlined),
           ),
         ],
       ),
 
-      // === Body Section ===
+      // === BODY SECTION ===
       body: Padding(
-        // Rather than padding each child individually inside the Column,
-        // wrap the entire Column in a single Padding widget.
-        // This makes the layout cleaner and more maintainable.
+        // Adds consistent padding around the entire Column instead of padding each element separately.
         padding: const EdgeInsets.all(16.0),
 
         child: Column(
-          crossAxisAlignment:
-              CrossAxisAlignment.start, // Align children to the left
-          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.start, // Aligns children to the left side.
+          mainAxisAlignment: MainAxisAlignment.center, // Vertically centers the Column content (can be adjusted).
           children: [
-            // === Product Image with Border Radius ===
-            // Image.asset doesn't accept a borderRadius directly,
-            // so we wrap it with ClipRRect to apply rounded corners visually.
+            // === PRODUCT IMAGE WITH ROUNDED CORNERS ===
+            // Since Image.asset doesn’t support borderRadius directly,
+            // we wrap it in ClipRRect to apply rounded corners.
             Center(
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(16),
@@ -127,12 +57,14 @@ class DetailsScreen extends StatelessWidget {
               ),
             ),
 
-            const SizedBox(height: 20), // Spacing between image and title
-            // === Product Title ===
+            const SizedBox(height: 20), // Adds vertical spacing after the image.
+
+            // === TITLE & DETAILS ROW ===
             Row(
               children: [
                 Column(
                   children: [
+                    // === PRODUCT NAME ===
                     const Text(
                       "Cappucino",
                       style: TextStyle(
@@ -140,9 +72,9 @@ class DetailsScreen extends StatelessWidget {
                         fontWeight: FontWeight.w600,
                       ),
                     ),
-                    const SizedBox(height: 8),
+                    const SizedBox(height: 8), // Spacing between title and subtitle.
 
-                    // === Subtitle (e.g. flavor or description) ===
+                    // === FLAVOR DESCRIPTION ===
                     const Text(
                       "with Chocolate",
                       style: TextStyle(
@@ -151,20 +83,14 @@ class DetailsScreen extends StatelessWidget {
                         color: Color.fromRGBO(47, 45, 44, 1),
                       ),
                     ),
-
                     const SizedBox(height: 8),
 
-                    // === Ratings Row ===
+                    // === STAR RATING WITH COUNT ===
                     Row(
                       children: const [
                         Icon(
                           Icons.star_rate,
-                          color: Color.fromRGBO(
-                            251,
-                            190,
-                            33,
-                            1,
-                          ), // Star gold color
+                          color: Color.fromRGBO(251, 190, 33, 1), // Yellow star color.
                         ),
                         SizedBox(width: 4),
                         Text(
@@ -186,7 +112,10 @@ class DetailsScreen extends StatelessWidget {
                     ),
                   ],
                 ),
-                SizedBox(width: 150,),
+
+                SizedBox(width: 150), // Spacing between title section and icon buttons on the right.
+
+                // === ICON BUTTONS (EXTRA FEATURES) ===
                 Column(
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [
@@ -194,6 +123,7 @@ class DetailsScreen extends StatelessWidget {
                       padding: const EdgeInsets.only(top: 30.0),
                       child: Row(
                         children: [
+                          // Icon 1 (e.g., customization icon)
                           Container(
                             width: 44,
                             height: 44,
@@ -203,7 +133,8 @@ class DetailsScreen extends StatelessWidget {
                             ),
                             child: Image.asset("assets/icon1.png"),
                           ),
-                          SizedBox(width: 10,),
+                          SizedBox(width: 10),
+                          // Icon 2 (e.g., ingredients icon)
                           Container(
                             width: 44,
                             height: 44,
@@ -222,24 +153,31 @@ class DetailsScreen extends StatelessWidget {
             ),
 
             SizedBox(height: 40),
-            Text("Description", style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),),
-            // Text(
-            //   "A cappuccino is an approximately 150 ml (5 oz) beverage, with 25 ml of espresso coffee and 85ml of fresh milk the fo.. Read More",
-            // ),
+
+            // === DESCRIPTION SECTION ===
+            Text(
+              "Description",
+              style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
+            ),
+
+            // === DESCRIPTION TEXT WITH STYLED "READ MORE" ===
+            // Use Text.rich with TextSpan to allow mixed styles within the same paragraph.
             Text.rich(
               TextSpan(
-                text: 'A cappuccino is an approximately 150 ml (5 oz) beverage, with 25 ml of espresso coffee and 85ml of fresh milk the fo.. ',
-                style: TextStyle(color: Colors.black),
+                text:
+                'A cappuccino is an approximately 150 ml (5 oz) beverage, with 25 ml of espresso coffee and 85ml of fresh milk the fo.. ',
+                style: TextStyle(color: Colors.black), // Normal text style
                 children: [
                   TextSpan(
                     text: 'Read More',
                     style: TextStyle(
-                      color: Color.fromRGBO(198, 124, 78, 1),
+                      color: Color.fromRGBO(198, 124, 78, 1), // Highlight color
                       fontWeight: FontWeight.bold,
                     ),
-                    recognizer: TapGestureRecognizer()..onTap = () {
-                      // Add your navigation or expansion logic here
-                    },
+                    recognizer: TapGestureRecognizer()
+                      ..onTap = () {
+                        // You can add navigation or expandable logic here
+                      },
                   ),
                 ],
               ),
@@ -247,44 +185,40 @@ class DetailsScreen extends StatelessWidget {
 
             SizedBox(height: 30),
 
-            Text("Size", style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),),
+            // === SIZE SELECTOR ===
+            Text(
+              "Size",
+              style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
+            ),
             SizedBox(height: 10),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
+                // Size S — Not selected (default border)
                 Container(
                   height: 43,
                   width: 96,
+                  decoration: BoxDecoration(
+                    border: Border.all(
+                      color: Color.fromRGBO(222, 222, 222, 1),
+                      width: 1,
+                    ),
+                    borderRadius: BorderRadius.circular(16),
+                  ),
                   child: Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: Text("S", textAlign: TextAlign.center),
                   ),
-                  decoration: BoxDecoration(
-                    border: Border.all(
-                      color: Color.fromRGBO(
-                        222,
-                        222,
-                        222,
-                        1,
-                      ), // 👈 or any color you like
-                      width: 1, // optional: change border thickness
-                    ),
-                    borderRadius: BorderRadius.circular(16),
-                  ),
                 ),
+                // Size M — Selected (highlighted background and border)
                 Container(
                   height: 43,
                   width: 96,
                   decoration: BoxDecoration(
                     color: Color.fromRGBO(255, 245, 238, 1),
                     border: Border.all(
-                      color: Color.fromRGBO(
-                        198,
-                        124,
-                        78,
-                        1,
-                      ), // 👈 or any color you like
-                      width: 1, // optional: change border thickness
+                      color: Color.fromRGBO(198, 124, 78, 1),
+                      width: 1,
                     ),
                     borderRadius: BorderRadius.circular(16),
                   ),
@@ -297,18 +231,14 @@ class DetailsScreen extends StatelessWidget {
                     ),
                   ),
                 ),
+                // Size L — Not selected (default border)
                 Container(
                   height: 43,
                   width: 96,
                   decoration: BoxDecoration(
                     border: Border.all(
-                      color: Color.fromRGBO(
-                        222,
-                        222,
-                        222,
-                        1,
-                      ), // 👈 or any color you like
-                      width: 1, // optional: change border thickness
+                      color: Color.fromRGBO(222, 222, 222, 1),
+                      width: 1,
                     ),
                     borderRadius: BorderRadius.circular(16),
                   ),
@@ -319,7 +249,10 @@ class DetailsScreen extends StatelessWidget {
                 ),
               ],
             ),
+
             SizedBox(height: 30),
+
+            // === PRICE & BUY BUTTON ===
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: Row(
@@ -330,7 +263,14 @@ class DetailsScreen extends StatelessWidget {
                     children: [
                       Padding(
                         padding: const EdgeInsets.only(right: 16.0),
-                        child: Text("Price", style: TextStyle(fontSize: 14,fontWeight: FontWeight.w400, color: Color.fromRGBO(155, 155, 155, 1)),),
+                        child: Text(
+                          "Price",
+                          style: TextStyle(
+                            fontSize: 14,
+                            fontWeight: FontWeight.w400,
+                            color: Color.fromRGBO(155, 155, 155, 1),
+                          ),
+                        ),
                       ),
                       SizedBox(height: 5),
                       Text(
@@ -338,21 +278,30 @@ class DetailsScreen extends StatelessWidget {
                         style: TextStyle(
                           color: Color.fromRGBO(198, 124, 78, 1),
                           fontWeight: FontWeight.w600,
-                          fontSize: 18
+                          fontSize: 18,
                         ),
                       ),
                     ],
                   ),
+
+                  // Buy Now Button
                   Container(
                     width: 217,
                     height: 55,
-                    child: Padding(
-                      padding: const EdgeInsets.all(16.0),
-                      child: Text("Buy Now", textAlign: TextAlign.center, style: TextStyle(color: Colors.white,fontWeight: FontWeight.w600),),
-                    ),
                     decoration: BoxDecoration(
                       color: Color.fromRGBO(198, 124, 78, 1),
                       borderRadius: BorderRadius.circular(16),
+                    ),
+                    child: Padding(
+                      padding: const EdgeInsets.all(16.0),
+                      child: Text(
+                        "Buy Now",
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
                     ),
                   ),
                 ],
