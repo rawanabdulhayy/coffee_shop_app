@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:session_8/home_page.dart';
 
 class SplashScreen extends StatelessWidget {
   const SplashScreen({super.key});
@@ -86,12 +87,22 @@ class SplashScreen extends StatelessWidget {
                     children: [
                       Image.asset("assets/google.png"),
                       const SizedBox(width: 20),
-                      const Text(
-                        "Continue with Google",
-                        style: TextStyle(
-                          fontSize: 20,
-                          fontWeight: FontWeight.w500,
-                          color: Color.fromRGBO(0, 0, 0, 0.54),
+                      GestureDetector(
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => HomePage(), // The page you want to go to
+                            ),
+                          );
+                        },
+                        child: const Text(
+                          "Continue with Google",
+                          style: TextStyle(
+                            fontSize: 20,
+                            fontWeight: FontWeight.w500,
+                            color: Color.fromRGBO(0, 0, 0, 0.54),
+                          ),
                         ),
                       ),
                     ],

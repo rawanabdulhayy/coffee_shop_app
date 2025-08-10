@@ -1,0 +1,53 @@
+##Why your `ListView` doesn’t show?
+
+Flutter lays out widgets in **two passes**:
+
+1. **Parent → Child:** The parent tells the child how much space it *can* have (constraints).
+2. **Child → Parent:** The child tells the parent how much space it *wants* (size).
+
+Now here’s the catch:
+
+* **`ListView` wants infinite space** in its scrolling direction because it’s meant to scroll through unlimited items.
+* If you put it inside a `Column` or a `Padding` **without constraints**, it will try to expand forever, which Flutter won’t allow — so it throws an invisible layout error and renders nothing.
+
+---
+
+### **Your case**
+
+```dart
+Padding(
+  child: ListView(
+    children: [...]
+  )
+)
+```
+
+* `Padding` simply passes constraints down without limiting them.
+* If this is inside a `Column`, the `Column` says to the `ListView`:
+
+  > "You can have as much vertical height as you want"
+* `ListView` says:
+
+  > "Cool, I’ll take infinite height so I can scroll"
+* Flutter:
+  ❌ "Nope, infinite height inside another scrollable or unconstrained widget is not allowed."
+
+Result → It doesn’t render.
+
+---
+
+## **How to fix**
+
+You need to give `ListView` **a finite height** in its scroll direction:
+
+* Wrap in `Expanded` → takes the remaining space.
+* Wrap in `SizedBox(height: 100)` → fixed height.
+* Or make it `scrollDirection: Axis.horizontal` → then it only needs a finite width, which it already has from the screen.
+
+---
+
+💡 **Rule of thumb:**
+
+> Any scrollable (ListView, SingleChildScrollView, GridView) inside another unbounded parent **must** be given explicit constraints in its scrolling direction, or it will fail.
+
+---
