@@ -1,8 +1,64 @@
 import 'package:flutter/material.dart';
 import 'package:session_8/home_page.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
-class SplashScreen extends StatelessWidget {
+class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
+
+  @override
+  State<SplashScreen> createState() => _SplashScreenState();
+}
+
+class _SplashScreenState extends State<SplashScreen> {
+  //so we need to check before building anything what UI to even build
+  //this depends on the value of our key
+  @override
+  void initState() {
+    super.initState();
+    _checkLogin();
+  }
+
+  Future<void> _checkLogin() async {
+    final prefs = await SharedPreferences.getInstance();
+    bool loggedIn = prefs.getBool("logged_in") ?? false;
+
+    // if (loggedIn) {
+    //   Navigator.pushReplacement(
+    //     context,
+    //     MaterialPageRoute(builder: (context) => HomePage()),
+    //   );
+    // }
+
+    // Asynchronous navigation in initState
+    // Sometimes navigating directly in initState can cause errors like “setState() called after dispose” if the widget gets disposed quickly.
+    // To avoid that, wrap navigation inside a post-frame callback:
+
+    if (loggedIn) {
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(builder: (context) => const HomePage()),
+        );
+      });
+    }
+    else {
+      //do nothing => just stay on splashscreen, How can I even say "do nothing and stay where you are?
+      // Flutter will simply build the splash UI normally because _checkLogin didn’t trigger navigation.
+    }
+  }
+
+  Future<void> _login() async {
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setBool("logged_in", true);
+
+    // Using Navigator.push >> means if the user presses back from HomePage,
+    // they’ll come back to the splash screen.
+    // So we use Navigator.pushReplacement so splash is removed from the stack.
+    Navigator.pushReplacement(
+      context,
+      MaterialPageRoute(builder: (context) => HomePage()),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -88,13 +144,8 @@ class SplashScreen extends StatelessWidget {
                       Image.asset("assets/google.png"),
                       const SizedBox(width: 20),
                       GestureDetector(
-                        onTap: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => HomePage(), // The page you want to go to
-                            ),
-                          );
+                        onTap: () async {
+                          _login();
                         },
                         child: const Text(
                           "Continue with Google",
